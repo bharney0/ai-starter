@@ -6,7 +6,9 @@ import fs from "fs";
 import {HTML_TEMPLATE_PATH} from "server/configuration";
 import { PrerenderData } from "shared/PrerenderedData";
 import {ServerStyleSheet} from "styled-components";
-
+import path from "path";
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import ReactDOMServer from "react-dom/server";
 /**
  * Renders the react App as a html string.
  * @param url The render url. It will be injected in the react router so it can render the corresponding route.
@@ -23,9 +25,7 @@ export async function renderReactAsync(url: string, prerenderedObject?: unknown)
 
     const dataElement = PrerenderData.saveToDom(prerenderedObject);
 
-    // In SSR, using react-router-dom/BrowserRouter will throw an exception.
-    // Instead, we use react-router-dom/server/StaticRouter.
-    // In the client compilation, we still use BrowserRouter (see: src/client/Index.tsx)
+   
 
     const WrappedApp = (
         <StaticRouter location={url}>
@@ -43,7 +43,7 @@ export async function renderReactAsync(url: string, prerenderedObject?: unknown)
     // finally combine all parts together
 
     const renderedHtml = buildHtml(staticHtmlContent, reactContent, styleTags, dataElement);
-
+    
     return renderedHtml;
 }
 
@@ -66,9 +66,25 @@ function buildHtml(templateHtml: string, reactHtml: string, styleTags: string, d
 function renderToStringWithStyles(component: JSX.Element) {
     const sheet = new ServerStyleSheet();
     try {
-        const reactHtml = renderToString(sheet.collectStyles(component))
-        const styleTags = sheet.getStyleTags();
-        return [reactHtml, styleTags]
+        // In SSR, using react-router-dom/BrowserRouter will throw an exception.
+        // Instead, we use react-router-dom/server/StaticRouter.
+        // In the client compilation, we still use BrowserRouter (see: src/client/Index.tsx)
+        const statsFile = path.resolve('dist/loadable-stats.json');
+        const extractor = new ChunkExtractor({ statsFile });
+        const jsx = extractor.collectChunks(component);
+
+        const reactHtml = `
+            <html>
+                <head>
+                    ${extractor.getLinkTags()}
+                </head>
+                <body>
+                    <div id="react-app">${ReactDOMServer.renderToString(jsx)}</div>
+                    ${extractor.getScriptTags()}
+                </body>
+            </html>
+        `;
+        return [reactHtml, extractor.getStyleTags()];
     }
     finally {
         sheet.seal();

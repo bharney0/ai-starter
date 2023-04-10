@@ -12,7 +12,7 @@ export default function SamplePage1() {
 
     return (
         <Wrapper>
-            <h1>Sample page 1</h1>
+            <h1>Sample page 0</h1>
             {
                 model &&
                 <p>{model.message}</p>
