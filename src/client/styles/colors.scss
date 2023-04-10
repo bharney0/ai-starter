@@ -1,13 +1,13 @@
-  $primary:#808080;
-  $secondary:#e9ecef;
-  $dark:#343a40;
-  $light: #ffffff;
-  $highlight:#007bff;
+$primary: #808080;
+$secondary: #e9ecef;
+$dark: #343a40;
+$light: #ffffff;
+$highlight: #007bff;
 
 :export {
-  primary: $primary;
-  secondary: $secondary;
-  dark: $dark;
-  light: $light;
-  highlight:$highlight;
+	primary: $primary;
+	secondary: $secondary;
+	dark: $dark;
+	light: $light;
+	highlight: $highlight;
 }
