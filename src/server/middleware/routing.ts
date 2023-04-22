@@ -1,10 +1,10 @@
 import { Express } from 'express';
-import { ExampleModel } from 'shared/models';
-import { renderReactAsync } from 'server/ssr/renderReactAsync';
+import { ExampleModel } from '../../shared/models';
+import { renderReactAsync } from '../ssr/renderReactAsync';
 
 /** Defines the server routings. */
 export function useRouting(app: Express) {
-	app.get('/sample-page-1', async (req, res) => {
+	app.get('/', async (req, res) => {
 		const model: ExampleModel = {
 			id: 123,
 			message: 'This data came from the server'

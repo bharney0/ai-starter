@@ -1,4 +1,8 @@
-export default function toFormData(object: Object, form?: FormData, namespace?: string): FormData {
+export default function toFormData(
+	object: Object & any,
+	form?: FormData,
+	namespace?: string
+): FormData {
 	const formData = form || new FormData();
 	for (let property in object) {
 		if (!object.hasOwnProperty(property) || !object[property]) {

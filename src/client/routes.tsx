@@ -1,38 +1,29 @@
-import * as React from "react";
-import { lazy } from "@loadable/component";
-import { Routes } from "react-router-dom";
-import App from "./App";
-import { createBrowserHistory } from "history";
+import * as React from 'react';
+import loadable from '@loadable/component';
+import { Routes } from 'react-router-dom';
+import App from './App';
+import { createBrowserHistory } from 'history';
 // import * as RequiredAuthentication from "./components/Account/RequiredAuthentication";
 
 // const loading = () => {
 //     return <div />;
 // };
 
-const AsyncHome = lazy(
-  () => import(/* webpackChunkName: "Home" */ "./components/Home/Home")
+const AsyncHome = loadable(/* webpackChunkName: "Home" */ () => import('./components/Home/Home'));
+const AsyncCounter = loadable(
+	() => import(/* webpackChunkName: "Counter" */ './components/Counter/Counter')
 );
-const AsyncCounter = lazy(
-  () => import(/* webpackChunkName: "Counter" */ "./components/Counter/Counter")
+const AsyncFetchData = loadable(
+	() => import(/* webpackChunkName: "FetchData" */ './components/WeatherForecast/FetchData')
 );
-const AsyncFetchData = lazy(
-  () =>
-    import(
-      /* webpackChunkName: "FetchData" */ "./components/WeatherForecast/FetchData"
-    )
+const AsyncLayout = loadable(
+	() => import(/* webpackChunkName: "Layout" */ './components/Layout/Layout')
 );
-const AsyncLayout = lazy(
-  () => import(/* webpackChunkName: "Layout" */ "./components/Layout/Layout")
+const AsyncHomeLayout = loadable(
+	() => import(/* webpackChunkName: "HomeLayout" */ './components/Layout/HomeLayout')
 );
-const AsyncHomeLayout = lazy(
-  () =>
-    import(
-      /* webpackChunkName: "HomeLayout" */ "./components/Layout/HomeLayout"
-    )
-);
-const AsyncNotFound = lazy(
-  () =>
-    import(/* webpackChunkName: "NotFound" */ "./components/NotFound/NotFound")
+const AsyncNotFound = loadable(
+	() => import(/* webpackChunkName: "NotFound" */ './components/NotFound/NotFound')
 );
 // const AsyncEditProfile = lazy(() => import(/* webpackChunkName: "EditProfile" */ "./components/Profile/EditProfile"));
 // const AsyncRegister = lazy(() => import(/* webpackChunkName: "Register" */ "./components/Account/Register"));
@@ -52,28 +43,17 @@ const AsyncNotFound = lazy(
 // Create browser history to use in the Redux store
 const history = createBrowserHistory();
 export const routes = (
-  <div>
-    <Routes>
-      <App
-        exact
-        path="/"
-        element={AsyncHome}
-        layout={AsyncLayout}
-        history={history}
-      />
-      <App
-        path="/counter"
-        element={AsyncCounter}
-        layout={AsyncLayout}
-        history={history}
-      />
-      <App
-        path="/fetchdata/:startDateIndex?"
-        element={AsyncFetchData}
-        layout={AsyncLayout}
-        history={history}
-      />
-      {/* <App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} /> 
+	<div>
+		<Routes>
+			<App path="/" element={AsyncHome} layout={AsyncLayout} history={history} />
+			<App path="/counter" element={AsyncCounter} layout={AsyncLayout} history={history} />
+			<App
+				path="/fetchdata/:startDateIndex?"
+				element={AsyncFetchData}
+				layout={AsyncLayout}
+				history={history}
+			/>
+			{/* <App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} /> 
              <App
                 path="/Register"
                 element={AsyncRegister}
@@ -157,7 +137,7 @@ export const routes = (
                 )}
                 layout={AsyncHomeLayout}
             /> */}
-      <App element={AsyncNotFound} layout={AsyncHomeLayout} history={history} />
-    </Routes>
-  </div>
+			<App element={AsyncNotFound} layout={AsyncHomeLayout} history={history} />
+		</Routes>
+	</div>
 );

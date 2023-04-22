@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { PrerenderData } from 'shared/PrerenderedData';
+import { PrerenderData } from '../shared/PrerenderedData';
 
 const ServerDataContext = createContext<unknown>(null);
 

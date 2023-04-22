@@ -19,7 +19,7 @@ module.exports = {
 		tsconfigRootDir: __dirname,
 		project: ['./tsconfig.json', './config/tsconfig.eslint.json']
 	},
-	plugins: ['@typescript-eslint', 'import', 'jest', 'no-unsanitized'],
+	plugins: ['@typescript-eslint', 'import', 'jest', 'no-unsanitized', 'react-hooks'],
 	settings: {
 		'import/resolver': {
 			node: {
@@ -189,6 +189,8 @@ module.exports = {
 				selector: 'property',
 				format: null // does not check property names (ie HTTP headers)
 			}
-		]
+		],
+		'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+		'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencies
 	}
 };

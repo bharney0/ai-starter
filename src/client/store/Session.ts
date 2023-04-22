@@ -3,6 +3,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppState, AppThunkAction, TypedDispatch, useAppDispatch, useAppSelector } from '.';
 import { Bearer, ErrorMessage } from '../models';
 import { decodeToken, removeToken, saveToken, unloadedTokenState } from '../utils/TokenUtility';
+import { AnyAction } from '@reduxjs/toolkit';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
@@ -46,17 +47,24 @@ export const actionCreators = {
 			token: bearerFromStore
 		});
 	},
-	loadToken:
-		(callback?: () => void): AppThunkAction<{}> =>
-		(dispatch, getState) => {
-			let bearerFromStore: Bearer = unloadedTokenState();
+	loadToken: (callback?: () => AnyAction): AnyAction => {
+		let bearerFromStore: Bearer = unloadedTokenState();
+		if (callback) {
+			const dispatch = useAppDispatch();
 			dispatch({
 				type: 'RECEIVE_TOKEN',
 				username: bearerFromStore.name || '',
 				token: bearerFromStore
 			});
-			if (callback) callback();
-		},
+			return callback();
+		} else {
+			return {
+				type: 'RECEIVE_TOKEN',
+				username: bearerFromStore.name || '',
+				token: bearerFromStore
+			};
+		}
+	},
 	getToken:
 		(callback?: () => void): AppThunkAction<{}> =>
 		async dispatch => {
@@ -73,13 +81,13 @@ export const actionCreators = {
 					if ((data as ErrorMessage).error) {
 						dispatch({ type: 'RECEIVE_TOKEN', token: undefined, username: '' });
 					} else {
-						let BearerToken: Bearer = decodeToken(data);
+						let BearerToken: Bearer | undefined = decodeToken(data);
 						dispatch({
 							type: 'RECEIVE_TOKEN',
-							username: BearerToken.name,
+							username: BearerToken?.name ?? '',
 							token: BearerToken
 						});
-						saveToken(BearerToken);
+						if (BearerToken) saveToken(BearerToken);
 						if (callback) {
 							callback();
 						}

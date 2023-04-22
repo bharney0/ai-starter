@@ -1,5 +1,4 @@
-import * as cookie from 'react-cookie';
-import { Bearer, ErrorMessage } from '../models';
+import { Bearer, BearerToken, ErrorMessage } from '../models';
 
 function unloadedTokenState() {
 	let bearerFromStore: Bearer = {};
@@ -27,24 +26,29 @@ function removeToken() {
 
 function saveToken(BearerToken: Bearer) {
 	if (typeof window !== 'undefined') {
-		const cookieDataFromServer = window['cookieData'];
+		const cookieDataFromServer = (window as any)['cookieData'];
 		if (cookieDataFromServer) {
 			Object.getOwnPropertyNames(cookieDataFromServer).forEach(name => {
-				cookie.save(name, cookieDataFromServer[name]);
+				localStorage.setItem(name, cookieDataFromServer[name]);
 			});
 		}
-		if (window.sessionStorage) {
-			window.sessionStorage.setItem('username', BearerToken.name);
-			window.sessionStorage.setItem('jwt', JSON.stringify(BearerToken));
-		} else if (window.localStorage) {
-			window.localStorage.setItem('username', BearerToken.name);
-			window.localStorage.setItem('jwt', JSON.stringify(BearerToken));
+		if (BearerToken && BearerToken.name) {
+			if (window.sessionStorage) {
+				window.sessionStorage.setItem('username', BearerToken.name);
+				window.sessionStorage.setItem('jwt', JSON.stringify(BearerToken));
+			} else if (window.localStorage) {
+				window.localStorage.setItem('username', BearerToken.name);
+				window.localStorage.setItem('jwt', JSON.stringify(BearerToken));
+			}
 		}
 	}
 }
 
 function decodeToken(data: Bearer | ErrorMessage) {
-	let token = data['token'];
+	let token = (data as any).token;
+	if (!token) {
+		return;
+	}
 	let base64Url = token.split('.')[1];
 	let base64 = base64Url.replace('-', '+').replace('_', '/');
 	let decoded = JSON.parse(window.atob(base64));

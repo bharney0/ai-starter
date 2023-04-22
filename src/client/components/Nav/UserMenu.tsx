@@ -8,47 +8,49 @@ import * as SessionState from '../../store/Session';
 import MemberUserMenu from './MemberUserMenu';
 import { SignIn } from './SignIn';
 
-
 interface NavProps {
-    onUpdate: () => void;
+	onUpdate: () => void;
 }
 
-type UserMenuProps = SessionState.SessionState
-    & {
-        accountActions: typeof AccountState.actionCreators,
-        sessionActions: typeof SessionState.actionCreators,
-        alertActions: typeof AlertState.actionCreators;
-    }
+type UserMenuProps = SessionState.SessionState & {
+	accountActions: typeof AccountState.actionCreators;
+	sessionActions: typeof SessionState.actionCreators;
+	alertActions: typeof AlertState.actionCreators;
+};
 
 export class UserMenu extends React.Component<UserMenuProps, {}> {
-    componentDidUpdate(prevProps: UserMenuProps) {
-        if (this.props.isRequiredToken) {
-            this.props.sessionActions.loadToken();
-        }
-    }
-    componentDidMount() {
-        if (this.props.isRequiredRefreshOnClient) {
-            this.props.sessionActions.loadToken();
-        }
-    }
-  
-    public render() {
-        const { username } = this.props;
-        if (username == "")
-            return null
+	componentDidUpdate(prevProps: UserMenuProps) {
+		if (this.props.isRequiredToken) {
+			this.props.sessionActions.loadToken();
+		}
+	}
+	componentDidMount() {
+		if (this.props.isRequiredRefreshOnClient) {
+			this.props.sessionActions.loadToken();
+		}
+	}
 
-    return <React.Fragment>
-        <SignIn username={username} />
-        <MemberUserMenu {...this.props} />
-        </React.Fragment>
-    }
+	public render() {
+		const { username } = this.props;
+		if (username == '') return null;
+
+		return (
+			<React.Fragment>
+				<SignIn username={username} />
+				<MemberUserMenu {...this.props} />
+			</React.Fragment>
+		);
+	}
 }
 
 export default connect(
-    (state: ApplicationState) => { return state.session }, // Selects which state properties are merged into the component's props
-    (dispatch: Dispatch<SessionState.SessionState>) => { // Selects which action creators are merged into the component's props
-        return {
-            sessionActions: bindActionCreators(SessionState.actionCreators, dispatch),
-        };
-    },
-)(UserMenu) as typeof UserMenu;
+	(state: ApplicationState) => {
+		return state.session;
+	}, // Selects which state properties are merged into the component's props
+	(dispatch: Dispatch) => {
+		// Selects which action creators are merged into the component's props
+		return {
+			sessionActions: bindActionCreators(SessionState.actionCreators, dispatch)
+		};
+	}
+)(UserMenu);

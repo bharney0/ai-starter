@@ -36,6 +36,10 @@ export interface Bearer {
 	sub?: string;
 }
 
+export interface BearerToken {
+	token: Bearer;
+}
+
 export interface LoginViewModel {
 	email?: string;
 	password?: string;

@@ -92,13 +92,13 @@ export const actionCreators = {
 							error(data as ErrorMessage);
 						}
 					} else {
-						let BearerToken: Bearer = decodeToken(data);
+						let BearerToken: Bearer | undefined = decodeToken(data);
 						dispatch({
 							type: 'RECEIVE_TOKEN',
-							username: BearerToken.name,
+							username: BearerToken?.name ?? '',
 							token: BearerToken
 						});
-						saveToken(BearerToken);
+						if (BearerToken) saveToken(BearerToken);
 						if (callback) {
 							callback();
 						}
@@ -240,13 +240,13 @@ export const actionCreators = {
 						if ((data as ErrorMessage).error) {
 							dispatch({ type: 'RECEIVE_TOKEN', token: undefined, username: '' });
 						} else {
-							let BearerToken: Bearer = decodeToken(data);
+							let BearerToken: Bearer | undefined = decodeToken(data);
 							dispatch({
 								type: 'RECEIVE_TOKEN',
-								username: BearerToken.name,
+								username: BearerToken?.name ?? '',
 								token: BearerToken
 							});
-							saveToken(BearerToken);
+							if (BearerToken) saveToken(BearerToken);
 							if (callback) {
 								callback();
 							}
@@ -301,13 +301,13 @@ export const actionCreators = {
 						if ((data as ErrorMessage).error) {
 							dispatch({ type: 'RECEIVE_TOKEN', token: undefined, username: '' });
 						} else {
-							let BearerToken: Bearer = decodeToken(data);
+							let BearerToken: Bearer | undefined = decodeToken(data);
 							dispatch({
 								type: 'RECEIVE_TOKEN',
-								username: BearerToken.name,
+								username: BearerToken?.name ?? '',
 								token: BearerToken
 							});
-							saveToken(BearerToken);
+							if (BearerToken) saveToken(BearerToken);
 							if (callback) {
 								callback();
 							}
@@ -368,13 +368,13 @@ export const actionCreators = {
 								}
 							} else {
 								removeToken();
-								let BearerToken: Bearer = decodeToken(data);
+								let BearerToken: Bearer | undefined = decodeToken(data);
 								dispatch({
 									type: 'RECEIVE_TOKEN',
-									username: BearerToken.name,
+									username: BearerToken?.name ?? '',
 									token: BearerToken
 								});
-								saveToken(BearerToken);
+								if (BearerToken) saveToken(BearerToken);
 								if (callback) {
 									callback();
 								}
@@ -444,13 +444,13 @@ export const actionCreators = {
 								}
 							} else {
 								removeToken();
-								let BearerToken: Bearer = decodeToken(data);
+								let BearerToken: Bearer | undefined = decodeToken(data);
 								dispatch({
 									type: 'RECEIVE_TOKEN',
-									username: BearerToken.name,
+									username: BearerToken?.name ?? '',
 									token: BearerToken
 								});
-								saveToken(BearerToken);
+								if (BearerToken) saveToken(BearerToken);
 								if (callback) {
 									callback();
 								}
@@ -492,13 +492,13 @@ export const actionCreators = {
 						}
 					} else {
 						removeToken();
-						let BearerToken: Bearer = decodeToken(data);
+						let BearerToken: Bearer | undefined = decodeToken(data);
 						dispatch({
 							type: 'RECEIVE_TOKEN',
-							username: BearerToken.name,
+							username: BearerToken?.name ?? '',
 							token: BearerToken
 						});
-						saveToken(BearerToken);
+						if (BearerToken) saveToken(BearerToken);
 						if (callback) {
 							callback();
 						}
@@ -536,13 +536,13 @@ export const actionCreators = {
 						}
 					} else {
 						removeToken();
-						let BearerToken: Bearer = decodeToken(data);
+						let BearerToken: Bearer | undefined = decodeToken(data);
 						dispatch({
 							type: 'RECEIVE_TOKEN',
-							username: BearerToken.name,
+							username: BearerToken?.name ?? '',
 							token: BearerToken
 						});
-						saveToken(BearerToken);
+						if (BearerToken) saveToken(BearerToken);
 						if (callback) {
 							callback();
 						}

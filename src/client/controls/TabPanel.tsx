@@ -1,78 +1,76 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Route, RouteComponentProps } from "react-router";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Route } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface ActiveIndex {
-  activeIndex: string;
+	activeIndex: string;
 }
 
 export const TabPanelContext = React.createContext({
-  activeIndex: "Account",
-  onUpdate: (activeIndex: string) => {}
+	activeIndex: 'Account',
+	onUpdate: (activeIndex: string) => {}
 });
 
 type TabPanelProps = {
-  activeIndex: string;
-  onUpdate: (activeIndex: string) => void;
-} & RouteComponentProps<{}>;
+	activeIndex: string;
+	onUpdate: (activeIndex: string) => void;
+};
 
 export class TabPanel extends React.Component<TabPanelProps, {}> {
-  static Content = ({ children }) => children;
+	static Content = ({ children }: { children: React.ReactElement }) => children;
 
-  static TabBar = ({ children, ...props }) => (
-    <ul className="nav nav-tabs" {...props}>
-      {children}
-    </ul>
-  );
+	static TabBar = ({ children, ...props }: { children: React.ReactElement }) => (
+		<ul className="nav nav-tabs" {...props}>
+			{children}
+		</ul>
+	);
 
-  static Tab = ({ children, tabIndex }) => (
-    <TabPanelContext.Consumer>
-      {({ onUpdate, activeIndex }) => (
-        <li onClick={() => onUpdate(tabIndex)} className="nav-item">
-          <a
-            href="javascript:void(0)"
-            role="button"
-            className={`nav-link ${
-              tabIndex.toLowerCase() === activeIndex.toLowerCase()
-                ? "active"
-                : ""
-            }`}
-          >
-            {children}
-          </a>
-        </li>
-      )}
-    </TabPanelContext.Consumer>
-  );
+	static Tab = ({ children, tabIndex }: { children: React.ReactElement; tabIndex: string }) => (
+		<TabPanelContext.Consumer>
+			{({ onUpdate, activeIndex }) => (
+				<li onClick={() => onUpdate(tabIndex)} className="nav-item">
+					<a
+						href="javascript:void(0)"
+						role="button"
+						className={`nav-link ${
+							tabIndex.toLowerCase() === activeIndex.toLowerCase() ? 'active' : ''
+						}`}
+					>
+						{children}
+					</a>
+				</li>
+			)}
+		</TabPanelContext.Consumer>
+	);
 
-  tabChange = (activeIndex: string) => {
-    this.setState(
-      ({ activeIndex }: ActiveIndex) => ({ activeIndex }),
-      () => {
-        this.props.onUpdate(activeIndex);
-        window.scrollTo(0, 0);
-      }
-    );
-  };
+	tabChange = (activeIndex: string) => {
+		this.setState(
+			({ activeIndex }: ActiveIndex) => ({ activeIndex }),
+			() => {
+				this.props.onUpdate(activeIndex);
+				window.scrollTo(0, 0);
+			}
+		);
+	};
 
-  state = {
-    activeIndex: this.props.activeIndex || "Account",
-    onTabChange: this.tabChange
-  };
+	state = {
+		activeIndex: this.props.activeIndex || 'Account',
+		onTabChange: this.tabChange
+	};
 
-  render() {
-    return (
-      <TabPanelContext.Provider
-        value={{
-          onUpdate: this.tabChange,
-          activeIndex: this.state.activeIndex
-        }}
-      >
-        {this.props.children}
-      </TabPanelContext.Provider>
-    );
-  }
+	render() {
+		return (
+			<TabPanelContext.Provider
+				value={{
+					onUpdate: this.tabChange,
+					activeIndex: this.state.activeIndex
+				}}
+			>
+				{this.props.children}
+			</TabPanelContext.Provider>
+		);
+	}
 }
 export default TabPanel;

@@ -1,4 +1,15 @@
-@import 'colors.scss';
+@use './colors.scss';
+/* ----------------------------FORM INPUT-------------------*/
+@use './formInput.scss';
+// end main
+
+/* ----------------------------ALERT------------------------*/
+@use './toastr.scss';
+// end Alert
+
+/* ---------------------- SLIDER -------------------- */
+@use './slider.scss';
+// end slider
 
 /*/*  ----------------------- BODY --------------------------- */
 html,
@@ -222,17 +233,6 @@ main {
 		margin-right: 10px;
 	}
 }
-/* ----------------------------FORM INPUT-------------------*/
-@import 'formInput.scss';
-// end main
-
-/* ----------------------------ALERT------------------------*/
-@import 'toastr.scss';
-// end Alert
-
-/* ---------------------- SLIDER -------------------- */
-@import 'slider.scss';
-// end slider
 
 /*  ----------------------- FOOTER --------------------------- */
 footer {

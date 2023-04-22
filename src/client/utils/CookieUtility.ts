@@ -1,4 +1,4 @@
-function getCookie(name: string): string {
+function getCookie(name: string): string | null {
 	const nameLenPlus = name.length + 1;
 	return (
 		document.cookie
@@ -12,7 +12,7 @@ function getCookie(name: string): string {
 			})[0] || null
 	);
 }
-function setCookie(name, value, days) {
+function setCookie(name: string, value: string, days: number) {
 	if (!days) {
 		days = 365 * 20;
 	}

@@ -9,11 +9,7 @@
 		"resolveJsonModule": true,
 		"strict": true,
 		"skipLibCheck": true,
-		"baseUrl": "src",
-		"paths": {
-			"client/*": ["client/*"],
-			"shared/*": ["shared/*"],
-			"server/*": ["server/*"]
-		}
-	}
+		"baseUrl": "src"
+	},
+	"include:": ["src/**/*"]
 }

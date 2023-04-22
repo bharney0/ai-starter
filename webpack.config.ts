@@ -1,4 +1,10 @@
-import { DefinePlugin, Configuration, NormalModuleReplacementPlugin, ProvidePlugin } from 'webpack';
+import {
+	DefinePlugin,
+	Configuration,
+	NormalModuleReplacementPlugin,
+	ProvidePlugin,
+	LoaderOptionsPlugin
+} from 'webpack';
 import 'webpack-dev-server';
 import { resolve } from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -8,6 +14,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 // import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 const LoadablePlugin = require('@loadable/webpack-plugin');
+const autoprefixer = require('autoprefixer');
 interface Env {
 	production: boolean;
 	hot: boolean;
@@ -55,7 +62,15 @@ function createServerConfig(_env: Env): Configuration {
 		},
 		module: {
 			rules: [
-				{ test: /\.tsx?$/, loader: 'ts-loader', exclude: /node_modules/ },
+				{
+					test: /\.tsx?$/,
+					use: ['babel-loader', 'ts-loader'],
+					exclude: /node_modules/
+				},
+				{
+					test: /\.(sass|css|scss)$(\?|$)/,
+					use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+				},
 				{
 					// file-loader config must match client's (except 'emitFile' property)
 					test: /\.(jpg|png|gif|svg)$/,
@@ -80,16 +95,31 @@ function createServerConfig(_env: Env): Configuration {
 			}),
 			new DefinePlugin({
 				__Server__: JSON.stringify(true)
-			})
+			}),
+			new LoaderOptionsPlugin({
+				minimize: true,
+				debug: false,
+				noInfo: true,
+				options: {
+					sassLoader: {
+						includePaths: [resolve('styles')]
+					},
+					context: '/',
+					postcss: () => [autoprefixer]
+				}
+			}),
+			new LoadablePlugin()
 		]
 	};
 } // end server configuration
 
 function createClientConfig(env: Env): Configuration {
 	const babelConfig = {
+		babelrc: false,
 		presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
 		plugins: [
 			'@babel/plugin-transform-runtime',
+			'@loadable/babel-plugin',
 			env.hot && require.resolve('react-refresh/babel')
 		].filter(Boolean)
 	};
@@ -128,13 +158,25 @@ function createClientConfig(env: Env): Configuration {
 					}
 				},
 				{
-					test: /\.(css|scss)(\?|$)/,
-					use: ['style-loader', 'css-loader', 'sass-loader']
+					test: /\.(sass|css|scss)$(\?|$)/,
+					use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
 				}
 			]
 		},
 		plugins: [
 			new CleanWebpackPlugin(),
+			new LoaderOptionsPlugin({
+				minimize: true,
+				debug: false,
+				noInfo: true,
+				options: {
+					sassLoader: {
+						includePaths: [resolve('styles')]
+					},
+					context: '/',
+					postcss: () => [autoprefixer]
+				}
+			}),
 			new HtmlWebpackPlugin({
 				template: './index.html'
 			}),
