@@ -27,7 +27,9 @@ const AsyncNotFound = loadable(
 );
 // const AsyncEditProfile = lazy(() => import(/* webpackChunkName: "EditProfile" */ "./components/Profile/EditProfile"));
 // const AsyncRegister = lazy(() => import(/* webpackChunkName: "Register" */ "./components/Account/Register"));
-// const AsyncSignIn = lazy(() => import(/* webpackChunkName: "SignIn" */ "./components/Account/SignIn"));
+const AsyncSignIn = loadable(
+	() => import(/* webpackChunkName: "SignIn" */ './components/Account/SignIn')
+);
 // const AsyncForgotPassword = lazy(() => import(/* webpackChunkName: "ForgotPassword" */ "./components/Account/ForgotPassword"));
 // const AsyncForgotPasswordConfirmation = lazy(() => import(/* webpackChunkName: "ForgotPasswordConfirmation" */ "./components/Account/ForgotPasswordConfirmation"));
 // const AsyncResetPassword = lazy(() => import(/* webpackChunkName: "ResetPassword" */ "./components/Account/ResetPassword"));
@@ -53,8 +55,8 @@ export const routes = (
 				layout={AsyncLayout}
 				history={history}
 			/>
-			{/* <App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} /> 
-             <App
+			<App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} />
+			{/*       <App
                 path="/Register"
                 element={AsyncRegister}
                 layout={AsyncHomeLayout}

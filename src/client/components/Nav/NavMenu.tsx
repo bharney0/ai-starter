@@ -75,7 +75,7 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 											<li className="nav-item">
 												<NavLink
 													className={({ isActive }) =>
-														isActive ? '"nav-link" active' : '"nav-link" root'
+														isActive ? 'nav-link active' : 'nav-link root'
 													}
 													to={'/counter'}
 													onClick={onUpdate}
@@ -86,7 +86,7 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 											<li className="nav-item">
 												<NavLink
 													className={({ isActive }) =>
-														isActive ? '"nav-link" active' : '"nav-link" root'
+														isActive ? 'nav-link active' : 'nav-link root'
 													}
 													to={'/fetchdata'}
 													onClick={onUpdate}

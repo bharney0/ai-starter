@@ -15,6 +15,7 @@ import {
 } from '../models';
 import { decodeToken, removeToken, saveToken, unloadedTokenState } from '../utils/TokenUtility';
 import { AppThunkAction } from './';
+import { useMsal } from '@azure/msal-react';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
@@ -116,31 +117,11 @@ export const actionCreators = {
 		},
 	logout:
 		(callback?: () => void): AppThunkAction<LogoutAction> =>
-		async (dispatch, getState) => {
-			let token = getState().session.token;
-			if (!token) {
-				return dispatch({ type: 'LOGOUT' });
-			}
-			await fetch('/Account/Logout', {
-				method: 'post',
-				headers: {
-					Authorization: `Bearer ${token.access_token}`,
-					'Content-Type': 'application/json',
-					Accept: 'application/json, text/plain, */*'
-				},
-				credentials: 'include'
-			})
-				.then(() => {
-					removeToken();
-					dispatch({ type: 'LOGOUT' });
-					if (callback) {
-						callback();
-					}
-				})
-				.catch(err => {
-					console.log(err);
-				});
+		async (dispatch, _getState) => {
 			dispatch({ type: 'LOGOUT' });
+			if (callback) {
+				callback();
+			}
 		},
 	register:
 		(

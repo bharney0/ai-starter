@@ -11,6 +11,7 @@ import * as AccountState from '../../store/Account';
 import * as AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import AdminUserMenu from './AdminUserMenu';
+import { useMsal } from '@azure/msal-react';
 
 interface NavProps {
 	onUpdate: () => void;
@@ -24,75 +25,74 @@ type MemberUserMenuProps = SessionState.SessionState & {
 type AdminUserMenuProps = SessionState.SessionState & {
 	sessionActions: typeof SessionState.actionCreators;
 };
-export class MemberUserMenu extends React.Component<MemberUserMenuProps, {}> {
-	onLogout = (onUpdate: Function) => {
-		this.props.accountActions.logout(() => {
-			this.props.alertActions.sendAlert('Signed out successfully!', AlertType.danger, true);
-			this.props.sessionActions.getToken();
+const MemberUserMenu = (props: MemberUserMenuProps) => {
+	const { instance } = useMsal();
+	const onLogout = (onUpdate: Function) => {
+		instance.logoutRedirect();
+		props.accountActions.logout(() => {
+			props.alertActions.sendAlert('Signed out successfully!', AlertType.danger, true);
+			props.sessionActions.getToken();
 			onUpdate();
 		});
 	};
 
-	public render() {
-		const { username } = this.props;
-
+	const { accounts } = useMsal();
+	if (accounts?.length > 0) {
+		const { username } = accounts[0];
 		if (!username || username == '') return null;
 
-		if (username.indexOf('@guest.starterpack.com') === -1) {
-			return (
-				<li className="nav-item dropdown max-userName" id="dropdown01">
-					<Link
-						className="nav-link userName user-icon d-flex justify-content-center align-items-center"
-						to=""
-						data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false"
-					>
-						<FontAwesomeIcon className="signed-in" size="1x" icon={faUserCircle} />
-						<div key="ellipsis" className="ellipsis">
-							{' ' + (username || '')}
+		return (
+			<li className="nav-item dropdown max-userName" id="dropdown01">
+				<Link
+					className="nav-link userName user-icon d-flex justify-content-center align-items-center"
+					to=""
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false"
+				>
+					<FontAwesomeIcon className="signed-in" size="1x" icon={faUserCircle} />
+					<div key="ellipsis" className="ellipsis">
+						{' ' + (username || '')}
+					</div>
+					<FontAwesomeIcon
+						className="svg-inline--fa fa-w-16 fa-lg dropdown-arrow"
+						size="1x"
+						icon={faSortDown}
+					/>
+				</Link>
+				<NavContext.Consumer>
+					{({ onUpdate }: NavProps) => (
+						<div className="dropdown-menu" aria-labelledby="dropdown01">
+							<Link key="account" className="dropdown-item" to="/Account" onClick={onUpdate}>
+								{' '}
+								<FontAwesomeIcon
+									className="svg-inline--fa fa-w-16 fa-lg"
+									size="1x"
+									icon={faCog}
+								/>{' '}
+								Account
+							</Link>
+							<Link
+								key="logout"
+								className="dropdown-item"
+								onClick={() => onLogout(onUpdate)}
+								to="/signedout"
+							>
+								<FontAwesomeIcon
+									className="svg-inline--fa fa-w-16 fa-lg"
+									size="1x"
+									icon={faSignOutAlt}
+								/>{' '}
+								Log out
+							</Link>
 						</div>
-						<FontAwesomeIcon
-							className="svg-inline--fa fa-w-16 fa-lg dropdown-arrow"
-							size="1x"
-							icon={faSortDown}
-						/>
-					</Link>
-					<NavContext.Consumer>
-						{({ onUpdate }: NavProps) => (
-							<div className="dropdown-menu" aria-labelledby="dropdown01">
-								<Link key="account" className="dropdown-item" to="/Account" onClick={onUpdate}>
-									{' '}
-									<FontAwesomeIcon
-										className="svg-inline--fa fa-w-16 fa-lg"
-										size="1x"
-										icon={faCog}
-									/>{' '}
-									Account
-								</Link>
-								<AdminUserMenu {...this.props} />
-								<Link
-									key="logout"
-									className="dropdown-item"
-									onClick={() => this.onLogout(onUpdate)}
-									to="/signedout"
-								>
-									<FontAwesomeIcon
-										className="svg-inline--fa fa-w-16 fa-lg"
-										size="1x"
-										icon={faSignOutAlt}
-									/>{' '}
-									Log out
-								</Link>
-							</div>
-						)}
-					</NavContext.Consumer>
-				</li>
-			);
-		}
-
-		return null;
+					)}
+				</NavContext.Consumer>
+			</li>
+		);
 	}
-}
+
+	return null;
+};
 
 export default MemberUserMenu;

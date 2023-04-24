@@ -31,12 +31,9 @@ export class UserMenu extends React.Component<UserMenuProps, {}> {
 	}
 
 	public render() {
-		const { username } = this.props;
-		if (username == '') return null;
-
 		return (
 			<React.Fragment>
-				<SignIn username={username} />
+				<SignIn />
 				<MemberUserMenu {...this.props} />
 			</React.Fragment>
 		);

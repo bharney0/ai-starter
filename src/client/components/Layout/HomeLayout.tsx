@@ -18,7 +18,7 @@ type LayoutProps = ApplicationState & {
 	accountActions: typeof AccountState.actionCreators;
 	sessionActions: typeof SessionState.actionCreators;
 	alertActions: typeof AlertState.actionCreators;
-};
+} & any;
 
 export class HomeLayout extends React.Component<LayoutProps, {}> {
 	public render() {
