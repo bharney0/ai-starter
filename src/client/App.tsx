@@ -43,7 +43,9 @@ const AsyncHomeLayout = lazy(
 const AsyncEditProfile = lazy(
 	() => import(/* webpackChunkName: "EditProfile" */ './components/Profile/EditProfile')
 );
-
+const AsyncProfile = lazy(
+	() => import(/* webpackChunkName: "Profile" */ './components/Profile/Profile')
+);
 interface Props {
 	/** Data used in the react prerender process. Use only in the server side. */
 	serverData?: unknown;
@@ -232,6 +234,43 @@ export const App = (props: AppProps) => {
 				/>
 				<Route
 					path="/account"
+					element={
+						<Suspense fallback={<Loading />}>
+							<React.Fragment>
+								<RequireAuthentication
+									alertActions={alertActions}
+									sessionActions={sessionActions}
+									accountActions={accountActions}
+									{...session}
+									{...rest}
+								>
+									<NavContext.Provider
+										value={{
+											on: state.on,
+											toggle: toggle,
+											onUpdate: onUpdate,
+											handleOverlayToggle: handleOverlayToggle
+										}}
+									>
+										<NavMenu
+											accountActions={accountActions}
+											alertActions={alertActions}
+											sessionActions={sessionActions}
+											{...session}
+											{...(props as any)}
+										/>
+										<AsyncHomeLayout {...rest} {...props}>
+											<AsyncProfile {...(props as any)} />
+										</AsyncHomeLayout>
+										<Footer />
+									</NavContext.Provider>
+								</RequireAuthentication>
+							</React.Fragment>
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/account/edit"
 					element={
 						<Suspense fallback={<Loading />}>
 							<React.Fragment>

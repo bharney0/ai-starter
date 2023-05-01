@@ -90,4 +90,4 @@ export default connect(
 			alertActions: bindActionCreators(AlertState.actionCreators, dispatch)
 		};
 	}
-)(Profile) as typeof Profile;
+)(Profile);

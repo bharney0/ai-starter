@@ -51,10 +51,9 @@ export const actionCreators = {
 	getProfile: (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
 		let token = getState().session.token;
 		if (token) {
-			await fetch('/Manage/Index', {
-				method: 'get',
+			await fetch('/CreateDocument', {
+				method: 'post',
 				headers: {
-					Authorization: `Bearer ${token.access_token}`,
 					'Content-Type': 'application/json',
 					Accept: 'application/json, text/plain, */*'
 				}

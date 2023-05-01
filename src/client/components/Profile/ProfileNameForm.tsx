@@ -1,20 +1,7 @@
 import React from 'react';
 import { Field, GenericField, reduxForm } from 'redux-form';
 
-const DropDownMenu = Field as new () => GenericField<any>;
-const InputField = Field as new () => GenericField<any>;
-
-interface DropDownProps {
-	options: any;
-	id: string;
-	placeholder: string;
-	className: string;
-	required: boolean;
-}
-
-class DropDown extends Field<DropDownProps> {}
-
-const profileForm = ({
+export const profileForm = ({
 	submitting,
 	handleSubmit,
 	...props
