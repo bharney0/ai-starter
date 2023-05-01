@@ -6,11 +6,13 @@ using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Azure;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AIStarter.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class DocumentController : ControllerBase
     {
         private static readonly string DatabaseId = "azure-docs";
@@ -33,18 +35,19 @@ namespace AIStarter.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost(Name = "ProvideCompletion")]
-        public async Task<string> ProvideCompletion([FromBody]string metadata)
+        [Route("ProvideCompletion")]
+        [HttpPost]
+
+        public async Task<string> ProvideCompletion(JsonDocument document)
         {
             try
             {
-                var documents = await GetRelevantDocuments(metadata);
-                return await AskPrompt(documents);
+                var documents = await GetRelevantDocuments(document.metadata);
+                var response = await AskPrompt(documents, document.content);
+                return JsonSerializer.Serialize(response);
             }
-
-            catch (Exception)
+            catch (Exception e)
             {
-
                 return "";
             }
 
@@ -95,15 +98,22 @@ namespace AIStarter.Controllers
             var container = database.GetCollection<DocumentContainer>(ContainerId);
             foreach (var fileName in relevantDocuments)
             {
-                // create a new FilterDefinition
-                var filter = Builders<DocumentContainer>.Filter.Eq("FileName", fileName);
-                var query = await container.FindAsync<DocumentContainer>(filter);
-                documents.Add(query.FirstOrDefault());
+                try
+                {
+
+                    // create a new FilterDefinition
+                    var filter = Builders<DocumentContainer>.Filter.Eq("FileName", fileName);
+                    var query = await container.FindAsync<DocumentContainer>(filter);
+                    documents.Add(query.FirstOrDefault());
+                }
+                catch (Exception e)
+                {
+                }
             }
             return documents;
         }
 
-        private async Task<string> AskPrompt(List<DocumentContainer> documents)
+        private async Task<string> AskPrompt(List<DocumentContainer> documents, string content)
         {
             // iterate through the documents and metadata
             var documentBuilder = new StringBuilder();
@@ -117,10 +127,15 @@ namespace AIStarter.Controllers
             var documentString = GetFirst750Words(documentBuilder.ToString());
             var metadataString = GetFirst750Words(metadataBuilder.ToString());
             // build a prompt
-            var summaryPrompt = $@">>>>>The following is part of a technical article, focusing on {metadataString}.
+            var summaryPrompt = $@"[Introduction]
+The following is part of a technical article, focusing on {metadataString}.
+
+[Context]
 {documentString}
 
->>>>>summarize the technical article by keeping important sentences focusing on {metadataString}.";
+[Session]
+Q: Summarize the technical article without changing the content, instead keep important sentences focusing on {metadataString}
+A:";
             // with the documents we want to ask
             // Azure Open AI to parse out the most relevant sentences to the article
             openAIClient = new OpenAIClient(new Uri(openAIUrl), new AzureKeyCredential(_configuration["OpenAIKey"]));
@@ -128,10 +143,16 @@ namespace AIStarter.Controllers
             string contextSummary = summaryCompletionsResponse.Choices.FirstOrDefault()!.Text;
 
             // now that we have the contextSummary we want to use that in the second prompt, but this time ask Azure Open AI to complete the article
-            var prompt = $@"The following is part of a technical article, focusing on {metadataString}.
+            var prompt = $@"[Introduction]
+You are a technical content author focusing on {metadataString}. You are trying to balance technicality and readability. Your writing should be engaging, relevant, and accurate.
+
+[Context]
 {contextSummary}
 
-create an original piece of the technical article by completing the next sentence using 50 characters or less, focusing on {metadataString}. The output should only include the next sentence.";
+[Session]
+Q: Using 2 sentences or less create original technical content focusing on {metadataString} This is what we have written so far:
+{content}
+A: ";
             Completions completionsResponse = await openAIClient.GetCompletionsAsync(deployment, prompt);
             string completion = completionsResponse.Choices.FirstOrDefault()!.Text;
             return completion;

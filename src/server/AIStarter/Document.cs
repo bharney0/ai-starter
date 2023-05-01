@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,11 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace AIStarter
 {
+    public class JsonDocument
+    {
+        public string metadata { get; set; }
+        public string content { get; set; }
+    }
     public class Document
     {
         public Metadata Metadata { get; set; }
@@ -50,5 +56,11 @@ namespace AIStarter
         public Document Document { get; set; }
         public string FileName { get; set; }
         public Guid Id { get; set; }
+    }
+
+    public class BodyObj
+    {
+        [JsonProperty("body")]
+        public string Body { get; set; }
     }
 }
