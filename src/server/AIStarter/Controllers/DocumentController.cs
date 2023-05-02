@@ -127,14 +127,17 @@ namespace AIStarter.Controllers
             var documentString = GetFirst750Words(documentBuilder.ToString());
             var metadataString = GetFirst750Words(metadataBuilder.ToString());
             // build a prompt
-            var summaryPrompt = $@"[Introduction]
+            var summaryPrompt = $@"<!-- Introduction
 The following is part of a technical article, focusing on {metadataString}.
+-->
 
-[Context]
+<!-- Context
 {documentString}
+-->
 
-[Session]
+<!-- Session
 Q: Summarize the technical article without changing the content, instead keep important sentences focusing on {metadataString}
+-->
 A:";
             // with the documents we want to ask
             // Azure Open AI to parse out the most relevant sentences to the article
@@ -143,16 +146,19 @@ A:";
             string contextSummary = summaryCompletionsResponse.Choices.FirstOrDefault()!.Text;
 
             // now that we have the contextSummary we want to use that in the second prompt, but this time ask Azure Open AI to complete the article
-            var prompt = $@"[Introduction]
-You are a technical content author focusing on {metadataString}. You are trying to balance technicality and readability. Your writing should be engaging, relevant, and accurate.
+            var prompt = $@"<!-- Introduction
+You are a technical content author focusing on {metadataString}. You are trying to balance technicality and readability. Your writing should be engaging, relevant, and accurate. Grammar, spelling, tone and brevity are important.
+-->
 
-[Context]
+<!-- Context
 {contextSummary}
+-->
 
-[Session]
-Q: Using 2 sentences or less create original technical content focusing on {metadataString} This is what we have written so far:
+<!-- Session 
+Q: Continue the concisely writing the next sentence, focusing on {metadataString}. This is what we have written so far: -->
 {content}
-A: ";
+-->
+A:";
             Completions completionsResponse = await openAIClient.GetCompletionsAsync(deployment, prompt);
             string completion = completionsResponse.Choices.FirstOrDefault()!.Text;
             return completion;

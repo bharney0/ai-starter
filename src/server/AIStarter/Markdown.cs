@@ -13,12 +13,12 @@ namespace AIStarter
         public string metadata { get; set; }
         public string content { get; set; }
     }
-    public class Document
+    public class Markdown
     {
         public Metadata Metadata { get; set; }
         public string Content { get; set; }
 
-        public static Document FromFile(string filePath)
+        public static Markdown FromFile(string filePath)
         {
             var text = File.ReadAllText(filePath);
             var regex = new Regex(@"^---(?<metadata>[\s\S]+?)---(?<content>[\s\S]+)", RegexOptions.Multiline);
@@ -40,7 +40,7 @@ namespace AIStarter
                 .Build();
             var metadata = deserializer.Deserialize<Metadata>(metadataText);
 
-            return new Document { Metadata = metadata, Content = contentText };
+            return new Markdown { Metadata = metadata, Content = contentText };
         }
     }
 
@@ -53,7 +53,7 @@ namespace AIStarter
 
     public class DocumentContainer
     {
-        public Document Document { get; set; }
+        public Markdown Document { get; set; }
         public string FileName { get; set; }
         public Guid Id { get; set; }
     }
