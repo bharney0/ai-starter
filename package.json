@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"start": "node ./dist/app.js",
-		"test": "npx jest",
+		"test:client": "npx jest",
 		"build": "npx webpack --env PRODUCTION",
 		"start:client": "npx webpack serve --config-name client --env HOT",
 		"start:server": "npx concurrently \"npx webpack -w\" \"npx nodemon ./dist/app.js\"",
