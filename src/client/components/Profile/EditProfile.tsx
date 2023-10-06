@@ -18,6 +18,7 @@ import LoadingRoute from '../Common/LoadingRoute';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const ProfileImageForm = lazy(
 	() => import(/* webpackChunkName: "ProfileImageForm" */ './ProfileImageForm')
@@ -138,9 +139,9 @@ export const EditProfile = (props: ProfileProps) => {
 
 	const getIcon = (className: IconDefinition, i: number) => {
 		if (i < state.compState) {
-			return faCheck;
+			return faCheck as IconProp;
 		} else {
-			return className;
+			return className as IconProp;
 		}
 	};
 
@@ -188,7 +189,7 @@ export const EditProfile = (props: ProfileProps) => {
 										left: '50%',
 										fontSize: '45px'
 									}}
-									icon={faSpinner}
+									icon={faSpinner as IconProp}
 									spin
 								/>
 							)}

@@ -30,6 +30,9 @@ const AsyncNotFound = loadable(
 const AsyncSignIn = loadable(
 	() => import(/* webpackChunkName: "SignIn" */ './components/Account/SignIn')
 );
+const AsyncAbout = loadable(
+	() => import(/* webpackChunkName: "About" */ './components/About/About')
+);
 // const AsyncForgotPassword = lazy(() => import(/* webpackChunkName: "ForgotPassword" */ "./components/Account/ForgotPassword"));
 // const AsyncForgotPasswordConfirmation = lazy(() => import(/* webpackChunkName: "ForgotPasswordConfirmation" */ "./components/Account/ForgotPasswordConfirmation"));
 // const AsyncResetPassword = lazy(() => import(/* webpackChunkName: "ResetPassword" */ "./components/Account/ResetPassword"));
@@ -48,6 +51,7 @@ export const routes = (
 	<div>
 		<Routes>
 			<App path="/" element={AsyncHome} layout={AsyncLayout} history={history} />
+			<App path="/about" element={AsyncAbout} layout={AsyncLayout} history={history} />
 			<App path="/counter" element={AsyncCounter} layout={AsyncLayout} history={history} />
 			<App
 				path="/fetchdata/:startDateIndex?"

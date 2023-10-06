@@ -12,6 +12,7 @@ import AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import AdminUserMenu from './AdminUserMenu';
 import { useMsal } from '@azure/msal-react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface NavProps {
 	onUpdate: () => void;
@@ -54,7 +55,7 @@ const MemberUserMenu = (props: MemberUserMenuProps) => {
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
-					<FontAwesomeIcon className="signed-in" size="1x" icon={faUserCircle} />
+					<FontAwesomeIcon className="signed-in" size="1x" icon={faUserCircle as IconProp} />
 					<div key="ellipsis" className="ellipsis">
 						{' ' + (username || '')}
 					</div>
@@ -67,7 +68,7 @@ const MemberUserMenu = (props: MemberUserMenuProps) => {
 								<FontAwesomeIcon
 									className="svg-inline--fa fa-w-16 fa-lg"
 									size="1x"
-									icon={faCog}
+									icon={faCog as IconProp}
 								/>{' '}
 								Account
 							</Link>
@@ -80,7 +81,7 @@ const MemberUserMenu = (props: MemberUserMenuProps) => {
 								<FontAwesomeIcon
 									className="svg-inline--fa fa-w-16 fa-lg"
 									size="1x"
-									icon={faSignOutAlt}
+									icon={faSignOutAlt as IconProp}
 								/>{' '}
 								Log out
 							</Link>
