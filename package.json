@@ -12,7 +12,7 @@
 	"scripts": {
 		"start": "node ./dist/app.js",
 		"test": "npx jest",
-		"build:prod": "npx webpack --env PRODUCTION",
+		"build": "npx webpack --env PRODUCTION",
 		"start:client": "npx webpack serve --config-name client --env HOT",
 		"start:server": "npx concurrently \"npx webpack -w\" \"npx nodemon ./dist/app.js\"",
 		"lint": "eslint . --ext .ts",

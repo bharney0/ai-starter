@@ -4,8 +4,6 @@ import { ApplicationState } from '../../store/index';
 import * as AccountState from '../../store/Account';
 import * as AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
-import AdminSliderMenu from '../Slider/AdminSliderMenu';
-import MemberSliderMenu from '../Slider/MemberSliderMenu';
 import SliderMenu from '../Slider/SliderMenu';
 import Alert from './AlertComponent';
 

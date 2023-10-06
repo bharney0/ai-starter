@@ -8,8 +8,6 @@ import { NavContext } from '../../App';
 import * as AccountState from '../../store/Account';
 import AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
-import MemberNavMenu from '../Nav/MemberNavMenu';
-import UserMenu from '../Nav/UserMenu';
 import {
 	faFacebook,
 	faTwitter,

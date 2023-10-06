@@ -10,12 +10,6 @@ import { createBrowserHistory } from 'history';
 // };
 
 const AsyncHome = loadable(/* webpackChunkName: "Home" */ () => import('./components/Home/Home'));
-const AsyncCounter = loadable(
-	() => import(/* webpackChunkName: "Counter" */ './components/Counter/Counter')
-);
-const AsyncFetchData = loadable(
-	() => import(/* webpackChunkName: "FetchData" */ './components/WeatherForecast/FetchData')
-);
 const AsyncLayout = loadable(
 	() => import(/* webpackChunkName: "Layout" */ './components/Layout/Layout')
 );
@@ -27,9 +21,6 @@ const AsyncNotFound = loadable(
 );
 // const AsyncEditProfile = lazy(() => import(/* webpackChunkName: "EditProfile" */ "./components/Profile/EditProfile"));
 // const AsyncRegister = lazy(() => import(/* webpackChunkName: "Register" */ "./components/Account/Register"));
-const AsyncSignIn = loadable(
-	() => import(/* webpackChunkName: "SignIn" */ './components/Account/SignIn')
-);
 const AsyncAbout = loadable(
 	() => import(/* webpackChunkName: "About" */ './components/About/About')
 );
@@ -52,14 +43,6 @@ export const routes = (
 		<Routes>
 			<App path="/" element={AsyncHome} layout={AsyncLayout} history={history} />
 			<App path="/about" element={AsyncAbout} layout={AsyncLayout} history={history} />
-			<App path="/counter" element={AsyncCounter} layout={AsyncLayout} history={history} />
-			<App
-				path="/fetchdata/:startDateIndex?"
-				element={AsyncFetchData}
-				layout={AsyncLayout}
-				history={history}
-			/>
-			<App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} />
 			{/*       <App
                 path="/Register"
                 element={AsyncRegister}

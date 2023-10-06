@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faBomb } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
@@ -13,7 +14,7 @@ export class NotFound extends React.Component<{}, {}> {
 							Ops. Sorry, something must have gone wrong, or we could not find the page you were
 							looking for.
 						</p>
-						<FontAwesomeIcon className="mt-3 mb-3" icon={faBomb} size="3x" />
+						<FontAwesomeIcon className="mt-3 mb-3" icon={faBomb as IconProp} size="3x" />
 					</div>
 				</div>
 			</section>
