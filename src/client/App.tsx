@@ -17,11 +17,9 @@ import { MsalProvider, useMsal } from '@azure/msal-react';
 import Loading from './components/Common/Loading';
 import { RequireAuthentication } from './components/Account/RequiredAuthentication';
 const AsyncHome = lazy(() => import(/* webpackChunkName: "Home" */ './components/Home/Home'));
-const AsyncCounter = lazy(
-	() => import(/* webpackChunkName: "Counter" */ './components/Counter/Counter')
-);
-const AsyncFetchData = lazy(
-	() => import(/* webpackChunkName: "FetchData" */ './components/WeatherForecast/FetchData')
+const AsyncAbout = lazy(() => import(/* webpackChunkName: "About" */ './components/About/About'));
+const AsyncContact = lazy(
+	() => import(/* webpackChunkName: "Contact" */ './components/Contact/Contact')
 );
 const AsyncLayout = lazy(
 	() => import(/* webpackChunkName: "Layout" */ './components/Layout/Layout')
@@ -41,6 +39,10 @@ const AsyncEditProfile = lazy(
 const AsyncProfile = lazy(
 	() => import(/* webpackChunkName: "Profile" */ './components/Profile/Profile')
 );
+const AsyncPortfolio = lazy(
+	() => import(/* webpackChunkName: "Portfolio" */ './components/Portfolio/Portfolio')
+);
+
 interface Props {
 	/** Data used in the react prerender process. Use only in the server side. */
 	serverData?: unknown;
@@ -141,7 +143,7 @@ export const App = (props: AppProps) => {
 					}
 				/>
 				<Route
-					path="/counter"
+					path="/portfolio"
 					element={
 						<Suspense fallback={<Loading />}>
 							<React.Fragment>
@@ -161,7 +163,7 @@ export const App = (props: AppProps) => {
 										{...(props as any)}
 									/>
 									<AsyncLayout {...rest} {...props}>
-										<AsyncCounter {...props} />
+										<AsyncPortfolio {...props} />
 									</AsyncLayout>
 									<Footer />
 								</NavContext.Provider>
@@ -170,7 +172,7 @@ export const App = (props: AppProps) => {
 					}
 				/>
 				<Route
-					path="/fetchdata/:startDateIndex?"
+					path="/about"
 					element={
 						<Suspense fallback={<Loading />}>
 							<React.Fragment>
@@ -190,7 +192,36 @@ export const App = (props: AppProps) => {
 										{...(props as any)}
 									/>
 									<AsyncLayout {...rest} {...props}>
-										<AsyncFetchData {...props} />
+										<AsyncAbout {...props} />
+									</AsyncLayout>
+									<Footer />
+								</NavContext.Provider>
+							</React.Fragment>
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/contact"
+					element={
+						<Suspense fallback={<Loading />}>
+							<React.Fragment>
+								<NavContext.Provider
+									value={{
+										on: state.on,
+										toggle: toggle,
+										onUpdate: onUpdate,
+										handleOverlayToggle: handleOverlayToggle
+									}}
+								>
+									<NavMenu
+										accountActions={accountActions}
+										alertActions={alertActions}
+										sessionActions={sessionActions}
+										{...session}
+										{...(props as any)}
+									/>
+									<AsyncLayout {...rest} {...props}>
+										<AsyncContact {...props} />
 									</AsyncLayout>
 									<Footer />
 								</NavContext.Provider>

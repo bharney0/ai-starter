@@ -33,20 +33,20 @@ export class SliderMenu extends React.PureComponent<{}, {}> {
 							className={({ isActive }) =>
 								isActive ? 'list-group-item active' : 'list-group-item'
 							}
-							to={'/blog'}
-							onClick={onUpdate}
-						>
-							Blog
-						</NavLink>
-						<NavLink
-							className={({ isActive }) =>
-								isActive ? 'list-group-item active' : 'list-group-item'
-							}
 							to={'/contact'}
 							onClick={onUpdate}
 						>
 							Contact
 						</NavLink>
+						{/* <NavLink
+							className={({ isActive }) =>
+								isActive ? 'list-group-item active' : 'list-group-item'
+							}
+							to={'/blog'}
+							onClick={onUpdate}
+						>
+							Blog
+						</NavLink>*/}
 					</React.Fragment>
 				)}
 			</NavContext.Consumer>

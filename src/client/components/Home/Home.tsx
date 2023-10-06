@@ -15,7 +15,7 @@ export default class Home extends React.Component<{}, {}> {
 						</p>
 					</div>
 				</div>
-				<div className="bg-bloack text-white">
+				<div className="bg-bloack text-white landing">
 					<div className="container">
 						<div className="row gy-4">
 							<div className="col-md">

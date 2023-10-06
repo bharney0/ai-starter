@@ -70,7 +70,7 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 									</Link>
 									<div className="collapse navbar-collapse" id="navbarsExampleDefault">
 										<ul className="navbar-nav me-auto">
-											{/* <li className="nav-item">
+											<li className="nav-item">
 												<NavLink
 													className={({ isActive }) =>
 														isActive ? 'nav-link active' : 'nav-link root'
@@ -97,13 +97,13 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 													className={({ isActive }) =>
 														isActive ? 'nav-link active' : 'nav-link root'
 													}
-													to={'/about'}
+													to={'/contact'}
 													onClick={onUpdate}
 												>
-													Blog
+													Contact
 												</NavLink>
 											</li>
-											<li className="nav-item">
+											{/*<li className="nav-item">
 												<NavLink
 													className={({ isActive }) =>
 														isActive ? 'nav-link active' : 'nav-link root'
@@ -111,10 +111,10 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 													to={'/about'}
 													onClick={onUpdate}
 												>
-													Contact
+													Blog
 												</NavLink>
-											</li> */}
-											<MemberNavMenu {...sessionActions} {...this.props} />
+											</li>
+											<MemberNavMenu {...sessionActions} {...this.props} />*/}
 										</ul>
 										<div className="d-none d-md-block d-lg-block d-xl-block">
 											<ul className="navbar-nav">
@@ -204,13 +204,58 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 									</div>
 									<div className="d-inline-flex">
 										<div className="d-md-none d-lg-none d-xl-none">
-											<ul className="navbar-nav">
-												<UserMenu
+											<ul className="navbar-nav mobile-nav">
+												{/* <UserMenu
 													{...accountActions}
 													{...alertActions}
 													{...sessionActions}
 													{...this.props}
-												/>
+												/> */}
+												<li className="nav-item">
+													<a
+														className="nav-link root"
+														href="https://www.facebook.com/brian.harney.12"
+														target="_blank"
+													>
+														<FontAwesomeIcon icon={faFacebook as IconProp} transform="grow-6" />
+													</a>
+												</li>
+												<li className="nav-item">
+													<a
+														className="nav-link root"
+														href="https://twitter.com/bharney0"
+														target="_blank"
+													>
+														<FontAwesomeIcon icon={faTwitter as IconProp} transform="grow-6" />
+													</a>
+												</li>
+												<li className="nav-item">
+													<a
+														className="nav-link root"
+														href="https://www.instagram.com/porkchop.12/"
+														target="_blank"
+													>
+														<FontAwesomeIcon icon={faInstagram as IconProp} transform="grow-6" />
+													</a>
+												</li>
+												<li className="nav-item">
+													<a
+														className="nav-link root"
+														href="https://www.linkedin.com/in/bharney0/"
+														target="_blank"
+													>
+														<FontAwesomeIcon icon={faLinkedin as IconProp} transform="grow-6" />
+													</a>
+												</li>
+												<li className="nav-item">
+													<a
+														className="nav-link root"
+														href="https://github.com/bharney"
+														target="_blank"
+													>
+														<FontAwesomeIcon icon={faGithub as IconProp} transform="grow-6" />
+													</a>
+												</li>
 											</ul>
 										</div>
 										<button

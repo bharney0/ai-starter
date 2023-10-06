@@ -17,7 +17,7 @@ interface NavProps {
 type LayoutProps = ApplicationState & {
 	accountActions: typeof AccountState.actionCreators;
 	sessionActions: typeof SessionState.actionCreators;
-	alertActions: typeof AlertState.actionCreators;
+	alertActions: typeof AlertState.default.actionCreators;
 } & any;
 
 export class HomeLayout extends React.Component<LayoutProps, {}> {
@@ -39,8 +39,8 @@ export class HomeLayout extends React.Component<LayoutProps, {}> {
 								<div id="sidebar" className="col-8 d-md-none d-lg-none d-xl-none sidebar-offcanvas">
 									<div className="list-group">
 										<SliderMenu />
-										<MemberSliderMenu {...this.props} />
-										<AdminSliderMenu {...this.props} />
+										{/* <MemberSliderMenu {...this.props} />
+										<AdminSliderMenu {...this.props} /> */}
 									</div>
 								</div>
 							</div>
