@@ -3,14 +3,13 @@ import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { AlertType } from '../../models';
 import { ApplicationState, useAppSelector } from '../../store/index';
-import * as AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import * as AccountState from '../../store/Account';
 import { useMsal } from '@azure/msal-react';
 import { useActionData, useNavigate } from 'react-router';
 import { actionCreators as sessionActions } from '../../store/Session';
 import { actionCreators as accountActions } from '../../store/Account';
-import { actionCreators as alertActions } from '../../store/Alert';
+import AlertState from '../../store/Alert';
 
 type SessionProps = SessionState.SessionState & {
 	sessionActions: typeof SessionState.actionCreators;
@@ -27,11 +26,11 @@ export const RequireAuthentication = ({ children }: { children: any }) => {
 
 		// check if we dont have any accounts
 		if (accounts === undefined || accounts?.length <= 0) {
-			alertActions.sendAlert(
-				'You must sign-in before you can access this area.',
-				AlertType.danger,
-				true
-			);
+			props.alertActions.sendAlert({
+				message: 'You must sign-in before you can access this area.',
+				AlertType: AlertType.danger,
+				autoClose: true
+			});
 			sessionActions.requiredToken();
 			history(`/signin`);
 			sessionActions.loadToken();

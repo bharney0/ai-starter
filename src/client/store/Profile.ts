@@ -51,28 +51,30 @@ export const actionCreators = {
 	getProfile: (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
 		let token = getState().session.token;
 		if (token) {
-			await fetch('/CreateDocument', {
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json, text/plain, */*'
-				}
-			})
-				.then(response => response.json() as Promise<ProfileViewModel | ErrorMessage>)
-				.then(data => {
-					if ((data as ErrorMessage).error) {
-						dispatch({ type: 'RECEIVE_PROFILE', profile: undefined });
-					} else {
-						dispatch({
-							type: 'RECEIVE_PROFILE',
-							profile: data as ProfileViewModel
-						});
-					}
-				})
-				.catch(err => {
 					dispatch({ type: 'RECEIVE_PROFILE', profile: undefined });
-				});
-			dispatch({ type: 'REQUEST_PROFILE' });
+
+			// await fetch('/CreateDocument', {
+			// 	method: 'post',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 		Accept: 'application/json, text/plain, */*'
+			// 	}
+			// })
+			// 	.then(response => response.json() as Promise<ProfileViewModel | ErrorMessage>)
+			// 	.then(data => {
+			// 		if ((data as ErrorMessage).error) {
+			// 			dispatch({ type: 'RECEIVE_PROFILE', profile: undefined });
+			// 		} else {
+			// 			dispatch({
+			// 				type: 'RECEIVE_PROFILE',
+			// 				profile: data as ProfileViewModel
+			// 			});
+			// 		}
+			// 	})
+			// 	.catch(err => {
+			// 		dispatch({ type: 'RECEIVE_PROFILE', profile: undefined });
+			// 	});
+			// dispatch({ type: 'REQUEST_PROFILE' });
 		}
 	},
 	getProfiles: (): AppThunkAction<KnownAction> => async (dispatch, getState) => {

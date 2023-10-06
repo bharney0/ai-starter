@@ -8,17 +8,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { NavContext } from '../../App';
 import * as AccountState from '../../store/Account';
-import * as AlertState from '../../store/Alert';
+import AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import MemberNavMenu from '../Nav/MemberNavMenu';
 import UserMenu from '../Nav/UserMenu';
 
 type NavMenuProps = SessionState.SessionState & {
-	accountActions: typeof AccountState.actionCreators;
-	sessionActions: typeof SessionState.actionCreators;
-	alertActions: typeof AlertState.actionCreators;
-};
-type UserMenuProps = SessionState.SessionState & {
 	accountActions: typeof AccountState.actionCreators;
 	sessionActions: typeof SessionState.actionCreators;
 	alertActions: typeof AlertState.actionCreators;
@@ -71,7 +66,7 @@ export class NavMenu extends React.Component<NavMenuProps, {}> {
 										</Link>
 									</strong>
 									<div className="collapse navbar-collapse" id="navbarsExampleDefault">
-										<ul className="navbar-nav mr-auto">
+										<ul className="navbar-nav me-auto">
 											<li className="nav-item">
 												<NavLink
 													className={({ isActive }) =>

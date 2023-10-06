@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-
+import { rootReducers } from './store';
 // Get the application-wide store instance, prepopulating with state from the server where available.
 const store = configureStore({
 	reducer: rootReducers,
@@ -15,9 +15,7 @@ const store = configureStore({
 // MSAL imports
 import { PublicClientApplication, EventType } from '@azure/msal-browser';
 import { msalConfig } from './auth/authConfig';
-import { rootReducers } from './store';
 import { Provider } from 'react-redux';
-import { actionCreators } from './store/Account';
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 

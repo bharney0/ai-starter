@@ -1,8 +1,6 @@
-import { ThunkDispatch } from '@reduxjs/toolkit';
-import { Action, Reducer } from 'redux';
+import { ThunkDispatch, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Alert, AlertType, AnimationState } from '../models';
-import { AppThunkAction, useAppDispatch, useAppSelector } from './';
-
+import { AppState, ApplicationState, useAppDispatch, useAppSelector } from '.';
 export interface AlertState {
 	items: Alert[];
 }
@@ -31,10 +29,11 @@ interface StartAnimateAction {
 	state: AnimationState;
 }
 
-type KnownAction = AlertAction | CloseAlertAction | StartAnimateAction;
-export const actionCreators = {
-	closeAlert: (index: number): ThunkDispatch<AlertState, any, KnownAction> => {
-		const dispatch = useAppDispatch();
+export type KnownAction = AlertAction | CloseAlertAction | StartAnimateAction;
+
+export const closeAlert = createAsyncThunk(
+	'CLOSE_ALERT',
+	async ({ index }: { index: number }, { dispatch }) => {
 		dispatch({ type: 'START_ANIMATE', id: index, state: AnimationState.exiting });
 		setTimeout(() => {
 			dispatch({ type: 'START_ANIMATE', id: index, state: AnimationState.exited });
@@ -42,15 +41,25 @@ export const actionCreators = {
 		setTimeout(() => {
 			dispatch({ type: 'CLOSE_ALERT', id: index });
 		}, exitingDuration + existedDuration);
-		return () => {};
-	},
-	sendAlert: (
-		message: React.ReactNode | string,
-		alertType: AlertType,
-		autoClose: boolean
-	): ThunkDispatch<AlertState, any, KnownAction> => {
-		const alert = useAppSelector(s => s.alert);
-		const dispatch = useAppDispatch();
+	}
+);
+
+export const sendAlert = createAsyncThunk(
+	'SEND_ALERT',
+	async (
+		{
+			message,
+			alertType,
+			autoClose
+		}: {
+			message: React.ReactNode | string;
+			alertType: AlertType;
+			autoClose: boolean;
+		},
+		{ dispatch, getState }
+	) => {
+		const state: ApplicationState = getState() as unknown as ApplicationState;
+		const { alert } = state;
 		if (alert.items.length < 1 && preventRepeat) {
 			dispatch({ type: 'SEND_ALERT', id: internalIndex, message, alertType });
 			const currentIndex = internalIndex;
@@ -70,49 +79,41 @@ export const actionCreators = {
 			}
 			internalIndex++;
 		}
-		return () => {};
 	}
-};
+);
 
-const unloadedState: AlertState = { items: [] };
-export const reducer: Reducer<AlertState> = (
-	state: AlertState | undefined,
-	incomingAction: Action
-) => {
-	if (state === undefined) {
-		return unloadedState;
-	}
-	const action = incomingAction as KnownAction;
-	switch (action.type) {
-		case 'SEND_ALERT':
-			return {
-				items: [
-					...state.items,
-					{
-						alertType: action.alertType,
-						id: action.id,
-						message: action.message,
-						state: AnimationState.entering
-					}
-				]
-			};
-		case 'START_ANIMATE':
-			return {
-				items: state.items.map(item => {
-					if (item.id === action.id) {
-						item.state = action.state;
-					}
-					return item;
-				})
-			};
-		case 'CLOSE_ALERT':
-			return {
-				items: state.items.filter(value => value.id !== action.id)
-			};
-		default:
-			// The following line guarantees that every action in the KnownAction union has been covered by a case above
-			const exhaustiveCheck: never = action;
-	}
+const actionCreators = { closeAlert, sendAlert };
 
-	return state;
-};
+const initialState: AlertState = { items: [] };
+export const alertSlice = createSlice({
+	name: 'alert',
+	initialState,
+	reducers: {
+		['SEND_ALERT']: (state, action) => {
+			if (state.items.length < 1 && preventRepeat) {
+				const { message, alertType } = action.payload;
+				state.items.push({ id: internalIndex, message, alertType, state: AnimationState.entering });
+				internalIndex++;
+			}
+			return state;
+		},
+		['START_ANIMATE']: (state, action) => {
+			const { id, state: animationState } = action.payload;
+			state.items.map(item => {
+				if (item.id === id) {
+					item.state = animationState;
+				}
+				return item;
+			});
+			return state;
+		},
+		['CLOSE_ALERT']: (state, action) => {
+			const { id } = action.payload;
+			state.items.filter(value => value.id !== id);
+			return state;
+		}
+	}
+});
+
+const { reducer } = alertSlice;
+export default { reducer, actionCreators };

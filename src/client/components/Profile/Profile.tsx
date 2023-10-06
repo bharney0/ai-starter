@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { ProfileViewModel } from '../../models';
 import { ApplicationState } from '../../store';
-import * as AlertState from '../../store/Alert';
+import AlertState from '../../store/Alert';
 import * as ProfileState from '../../store/Profile';
 import * as SessionState from '../../store/Session';
 import Loading from '../Common/Loading';

@@ -1,26 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { ServerDataProvider } from './serverData';
 import * as ReactDOM from 'react-dom';
 import Footer from './components/Footer/Footer';
 import NavMenu from './components/Nav/NavMenu';
 import { lazy } from '@loadable/component';
 import * as React from 'react';
-import { Provider, ReactReduxContext, useStore } from 'react-redux';
-import { rootReducers, useAppSelector } from './store/index';
+import { useAppSelector } from './store/index';
 import { actionCreators as sessionActions } from './store/Session';
 import { actionCreators as accountActions } from './store/Account';
-import { actionCreators as alertActions } from './store/Alert';
+import AlertState from './store/Alert';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.scss';
 import { Suspense, useContext, useState } from 'react';
 import { MsalProvider, useMsal } from '@azure/msal-react';
-import { CustomNavigationClient } from './components/Account/NavigationClient';
 import Loading from './components/Common/Loading';
-import RequiredAuthentication, {
-	RequireAuthentication
-} from './components/Account/RequiredAuthentication';
+import { RequireAuthentication } from './components/Account/RequiredAuthentication';
 const AsyncHome = lazy(() => import(/* webpackChunkName: "Home" */ './components/Home/Home'));
 const AsyncCounter = lazy(
 	() => import(/* webpackChunkName: "Counter" */ './components/Counter/Counter')
@@ -67,7 +62,7 @@ export const AuthContext = React.createContext(null);
 export const App = (props: AppProps) => {
 	const [state, setState] = useState({ on: false });
 	const session = useAppSelector(state => state);
-
+	const alertActions = AlertState.actionCreators;
 	const toggle = () => {
 		setState({ on: !state.on });
 		if (state.on) {

@@ -1,6 +1,6 @@
 import { reducer as formReducer } from 'redux-form';
 import * as Account from './Account';
-import * as Alert from './Alert';
+import Alert, { AlertState } from './Alert';
 import * as Counter from './Counter';
 import * as Profile from './Profile';
 import * as Session from './Session';
@@ -8,11 +8,10 @@ import * as WeatherForecasts from './WeatherForecasts';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AnyAction, combineReducers } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-
 // The top-level state object
 export interface ApplicationState {
 	session: Session.SessionState;
-	alert: Alert.AlertState;
+	alert: AlertState;
 	account: Account.AccountState;
 	profile: Profile.ProfileState;
 	counter: Counter.CounterState;

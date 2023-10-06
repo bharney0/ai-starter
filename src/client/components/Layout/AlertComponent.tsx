@@ -45,5 +45,5 @@ export class AlertComponent extends React.Component<AlertProps & any, {}> {
 	};
 }
 export default connect((state: ApplicationState) => state.alert, {
-	closeAlert: AlertState.actionCreators.closeAlert
+	closeAlert: AlertState.closeAlert
 })(AlertComponent);

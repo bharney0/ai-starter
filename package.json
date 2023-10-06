@@ -1,7 +1,7 @@
 {
-	"name": "ai-starter",
+	"name": "portfolio",
 	"version": "1.0.0",
-	"description": "AI Starter template using React SSR",
+	"description": "bharney.com website for portfolio, blogging, and about me.",
 	"main": "./dist/app.js",
 	"author": "bharney0",
 	"license": "MIT",
@@ -28,13 +28,11 @@
 		"@fortawesome/free-solid-svg-icons": "^5.1.0-8",
 		"@fortawesome/react-fontawesome": "0.2.0",
 		"@loadable/server": "^5.15.3",
+		"@popperjs/core": "^2.11.8",
 		"@reduxjs/toolkit": "^1.9.3",
-		"bootstrap": "^4.1.1",
-		"core-js": "^3.30.1",
+		"bootstrap": "^5.3.2",
 		"express": "^4.17.2",
 		"history": "4.6.3",
-		"jquery": "^3.6.4",
-		"popper.js": "^1.14.3",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-redux": "^8.0.5",
@@ -42,9 +40,7 @@
 		"react-router-redux": "^4.0.8",
 		"redux-form": "^8.3.10",
 		"redux-thunk": "^2.4.2",
-		"styled-components": "^5.3.3",
-		"tapable": "2.2.1",
-		"url-search-params": "^0.10.0"
+		"styled-components": "^5.3.3"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0",

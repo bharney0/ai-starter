@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { NavContext } from '../../App';
 import { AlertType } from '../../models';
 import * as AccountState from '../../store/Account';
-import * as AlertState from '../../store/Alert';
+import AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import AdminUserMenu from './AdminUserMenu';
 import { useMsal } from '@azure/msal-react';
@@ -28,9 +28,13 @@ type AdminUserMenuProps = SessionState.SessionState & {
 const MemberUserMenu = (props: MemberUserMenuProps) => {
 	const { instance } = useMsal();
 	const onLogout = (onUpdate: Function) => {
-		instance.logoutRedirect();
+		instance.logout();
 		props.accountActions.logout(() => {
-			props.alertActions.sendAlert('Signed out successfully!', AlertType.danger, true);
+			props.alertActions.sendAlert({
+				message: 'Signed out successfully!',
+				alertType: AlertType.danger,
+				autoClose: true
+			});
 			props.sessionActions.getToken();
 			onUpdate();
 		});
@@ -44,9 +48,9 @@ const MemberUserMenu = (props: MemberUserMenuProps) => {
 		return (
 			<li className="nav-item dropdown max-userName" id="dropdown01">
 				<Link
-					className="nav-link userName user-icon d-flex justify-content-center align-items-center"
+					className="nav-link userName user-icon d-flex justify-content-center align-items-center dropdown-toggle"
 					to=""
-					data-toggle="dropdown"
+					data-bs-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false"
 				>
@@ -54,11 +58,6 @@ const MemberUserMenu = (props: MemberUserMenuProps) => {
 					<div key="ellipsis" className="ellipsis">
 						{' ' + (username || '')}
 					</div>
-					<FontAwesomeIcon
-						className="svg-inline--fa fa-w-16 fa-lg dropdown-arrow"
-						size="1x"
-						icon={faSortDown}
-					/>
 				</Link>
 				<NavContext.Consumer>
 					{({ onUpdate }: NavProps) => (

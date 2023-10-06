@@ -6,7 +6,7 @@ import { InjectedFormProps } from 'redux-form';
 import { AlertType, Field as ModelField, LoginViewModel } from '../../models';
 import { ApplicationState } from '../../store/index';
 import * as AccountState from '../../store/Account';
-import * as AlertState from '../../store/Alert';
+import AlertState from '../../store/Alert';
 import * as SessionState from '../../store/Session';
 import LoadingRoute from '../Common/LoadingRoute';
 import { lazy } from '@loadable/component';
@@ -35,7 +35,7 @@ const SignIn = (props: FormProps) => {
 			<div className="row justify-content-center pt-4">
 				<div className="col-12 col-sm-8 col-md-6 col-lg-5">
 					<h2 className="text-center display-4">Sign-In.</h2>
-					<AsyncSignInButton />
+					<AsyncSignInButton {...props} />
 				</div>
 			</div>
 		</div>

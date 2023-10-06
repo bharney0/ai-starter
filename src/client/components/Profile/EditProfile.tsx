@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { AlertType, ProfileViewModel } from '../../models';
 import { ApplicationState } from '../../store/index';
-import * as AlertState from '../../store/Alert';
+import AlertState from '../../store/Alert';
 import * as ProfileState from '../../store/Profile';
 import * as SessionState from '../../store/Session';
 import '../../styles/formStepper.scss';
@@ -209,19 +209,19 @@ export const EditProfile = (props: ProfileProps) => {
 										props.profileActions.updateProfile(
 											values,
 											() => {
-												props.alertActions.sendAlert(
-													'Your profile was saved successfully.',
-													AlertType.success,
-													true
-												);
+												props.alertActions.sendAlert({
+													message: 'Your profile was saved successfully.',
+													alertType: AlertType.success,
+													autoClose: true
+												});
 												history('/Profile');
 											},
 											error => {
-												props.alertActions.sendAlert(
-													error.error_description,
-													AlertType.danger,
-													true
-												);
+												props.alertActions.sendAlert({
+													message: error.error_description,
+													alertType: AlertType.danger,
+													autoClose: true
+												});
 											}
 										);
 									}}
