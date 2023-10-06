@@ -10,6 +10,7 @@
 		"client"
 	],
 	"scripts": {
+		"start": "node ./dist/app.js",
 		"test": "npx jest",
 		"build:prod": "npx webpack --env PRODUCTION",
 		"start:client": "npx webpack serve --config-name client --env HOT",
