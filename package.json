@@ -19,8 +19,7 @@
 		"pre-push": "npm run lint && npm run test",
 		"pre-commit-prettier": "pretty-quick --staged --pattern \"**/*.{scss,ts,js,json,yml}\"",
 		"prettier": "prettier --write \"**/*.{scss,ts,js,json,yml}\"",
-		"prettier-check": "prettier --check \"**/*.{scss,ts,js,json,yml}\"",
-		"prepare": "husky install"
+		"prettier-check": "prettier --check \"**/*.{scss,ts,js,json,yml}\""
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free-brands": "^5.0.13",
@@ -88,7 +87,6 @@
 		"file-loader": "^6.2.0",
 		"generate-json-webpack-plugin": "^0.3.1",
 		"html-webpack-plugin": "^5.5.0",
-		"husky": "^7.0.4",
 		"jest": "^27.4.7",
 		"jsdom": "^19.0.0",
 		"json-loader": "0.5.4",
