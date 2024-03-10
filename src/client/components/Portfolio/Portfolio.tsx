@@ -5,6 +5,7 @@ import goSurfer from '../../images/GoSurfer.jpg';
 import harneyHall from '../../images/HarneyHall.jpg';
 import jMS from '../../images/JMS.jpg';
 import pCHFarms from '../../images/PCHFarms.jpg';
+import bharneyPortfolio from '../../images/bharneyportfolio.png';
 import { Link } from 'react-router-dom';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -108,7 +109,11 @@ export default class Portfolio extends React.Component<{}, {}> {
 									aria-label="Harney Hall Wedding"
 								></img>
 								<div className="card-body">
-									<Link className="icon-link icon-link-hover" target="_blank" to="#">
+									<Link
+										className="icon-link icon-link-hover"
+										target="_blank"
+										to="https://harneyhall.azurewebsites.net/"
+									>
 										<h5 className="card-title">Harney Hall Wedding</h5>
 										<FontAwesomeIcon
 											icon={faArrowRight as IconProp}
@@ -179,6 +184,36 @@ export default class Portfolio extends React.Component<{}, {}> {
 										Here at PCH Farms, we are Link non-profit medical marijuana marketplace
 										dedicated to connecting medical marijuana patients 21 years or older to local
 										marijuana collectives located right here in Santa Cruz.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="col">
+							<div className="card shadow-sm">
+								<img
+									src={bharneyPortfolio}
+									className="img-fluid rounded-top"
+									role="img"
+									aria-label="bharney Portfolio"
+								></img>
+								<div className="card-body">
+									<Link
+										className="icon-link icon-link-hover"
+										target="_blank"
+										to="https://bharneyportfolio.azurewebsites.net/"
+									>
+										<h5 className="card-title">bharney Portfolio</h5>
+										<FontAwesomeIcon
+											icon={faArrowRight as IconProp}
+											className="bi pb-1"
+											transform="shrink-6"
+											pull="left"
+										/>
+									</Link>
+									<p className="card-text">
+										Here in the wilderness theres plenty to see. You just might find a black bear
+										out there. This site has been created by Brian Harney to reflect the types of
+										things he enjoys.
 									</p>
 								</div>
 							</div>
