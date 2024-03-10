@@ -3,100 +3,36 @@ import * as React from 'react';
 export default class Home extends React.Component<{}, {}> {
 	public render() {
 		return (
-			<div>
-				<div className="jumbotron text-center">
-					<h1 className="display-3">JSStarter</h1>
-					<p className="lead">
-						Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac
-						cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-					</p>
-					<p>
-						<a className="btn btn-lg btn-success" href="#" role="button">
-							Sign up today
-						</a>
-					</p>
-				</div>
-				<div className="row">
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
-						</p>
+			<React.Fragment>
+				<div className="container pt-5 pb-2">
+					<div className="col-xxl-10">
+						<h1 className="hero">Brian Harney's Software portfolio</h1>
+						<div className="border hero-border border-light w-25 my-4"></div>
 					</div>
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
-						</p>
-					</div>
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
-						</p>
-					</div>
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
-						</p>
-					</div>
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
-						</p>
-					</div>
-					<div className="col-12 col-sm-6 col-md-6 col-lg-4">
-						<h2>Heading</h2>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus
-							commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-							Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.{' '}
-						</p>
-						<p>
-							<a className="btn btn-secondary" href="#" role="button">
-								View details &raquo;
-							</a>
+					<div className="col-lg-10 col-xxl-8">
+						<p className="mb-4 hero-text">
+							My name is Brian Harney and I love building incredible software.
 						</p>
 					</div>
 				</div>
-			</div>
+				<div className="bg-bloack text-white landing">
+					<div className="container">
+						<div className="row gy-4">
+							<div className="col-md">
+								<p>
+									Our increasingly connected world demands services that are resiliant, fast, and
+									always available. We've has been raising our expectations about web applications,
+									and rethinking how we share code and ideas. But sometimes it can be difficult to
+									understand all of the new technology because the web has been changing at a mile a
+									minute. I want to show you some of the things I've learned in my own experiences
+									building applications. I hope that these writings may help you in your search for
+									an answers/solutions to your own problems.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</React.Fragment>
 		);
 	}
 }

@@ -10,12 +10,6 @@ import { createBrowserHistory } from 'history';
 // };
 
 const AsyncHome = loadable(/* webpackChunkName: "Home" */ () => import('./components/Home/Home'));
-const AsyncCounter = loadable(
-	() => import(/* webpackChunkName: "Counter" */ './components/Counter/Counter')
-);
-const AsyncFetchData = loadable(
-	() => import(/* webpackChunkName: "FetchData" */ './components/WeatherForecast/FetchData')
-);
 const AsyncLayout = loadable(
 	() => import(/* webpackChunkName: "Layout" */ './components/Layout/Layout')
 );
@@ -27,8 +21,8 @@ const AsyncNotFound = loadable(
 );
 // const AsyncEditProfile = lazy(() => import(/* webpackChunkName: "EditProfile" */ "./components/Profile/EditProfile"));
 // const AsyncRegister = lazy(() => import(/* webpackChunkName: "Register" */ "./components/Account/Register"));
-const AsyncSignIn = loadable(
-	() => import(/* webpackChunkName: "SignIn" */ './components/Account/SignIn')
+const AsyncAbout = loadable(
+	() => import(/* webpackChunkName: "About" */ './components/About/About')
 );
 // const AsyncForgotPassword = lazy(() => import(/* webpackChunkName: "ForgotPassword" */ "./components/Account/ForgotPassword"));
 // const AsyncForgotPasswordConfirmation = lazy(() => import(/* webpackChunkName: "ForgotPasswordConfirmation" */ "./components/Account/ForgotPasswordConfirmation"));
@@ -48,14 +42,7 @@ export const routes = (
 	<div>
 		<Routes>
 			<App path="/" element={AsyncHome} layout={AsyncLayout} history={history} />
-			<App path="/counter" element={AsyncCounter} layout={AsyncLayout} history={history} />
-			<App
-				path="/fetchdata/:startDateIndex?"
-				element={AsyncFetchData}
-				layout={AsyncLayout}
-				history={history}
-			/>
-			<App path="/Signin" element={AsyncSignIn} layout={AsyncHomeLayout} />
+			<App path="/about" element={AsyncAbout} layout={AsyncLayout} history={history} />
 			{/*       <App
                 path="/Register"
                 element={AsyncRegister}

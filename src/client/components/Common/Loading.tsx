@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 class Loading extends React.Component<{}, {}> {
 	public render() {
@@ -15,7 +16,7 @@ class Loading extends React.Component<{}, {}> {
 						left: '50%',
 						fontSize: '45px'
 					}}
-					icon={faSpinner}
+					icon={faSpinner as IconProp}
 					spin
 				/>
 			</div>

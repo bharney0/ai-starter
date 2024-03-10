@@ -15,7 +15,6 @@ import {
 } from '../models';
 import { decodeToken, removeToken, saveToken, unloadedTokenState } from '../utils/TokenUtility';
 import { AppThunkAction } from './';
-import { useMsal } from '@azure/msal-react';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 

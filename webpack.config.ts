@@ -23,7 +23,7 @@ interface Env {
 function createBaseConfig(env: Env): Configuration {
 	return {
 		mode: env.production ? 'production' : 'development',
-		devtool: env.production ? false : 'source-map',
+		devtool: env.production ? false : 'inline-source-map',
 		resolve: {
 			extensions: ['.ts', '.tsx', '.js']
 		},
@@ -138,7 +138,8 @@ function createClientConfig(env: Env): Configuration {
 		output: {
 			path: resolve(__dirname, 'dist', 'public'),
 			filename: env.production ? 'js/[name].[chunkhash].js' : 'js/[name].js',
-			devtoolModuleFilenameTemplate: 'file:///[absolute-resource-path]'
+			devtoolModuleFilenameTemplate: 'file:///[absolute-resource-path]',
+			clean: true
 		},
 		module: {
 			rules: [
@@ -181,13 +182,7 @@ function createClientConfig(env: Env): Configuration {
 				template: './index.html'
 			}),
 			new CopyWebpackPlugin({
-				patterns: [{ from: 'resources/favicon.ico' }]
-			}),
-			new ProvidePlugin({
-				$: 'jquery',
-				jQuery: 'jquery',
-				JQuery: 'jquery',
-				Popper: ['popper.js', 'default']
+				patterns: [{ from: 'favicon.ico' }]
 			}),
 			new NormalModuleReplacementPlugin(/\/iconv-loader$/, require.resolve('node-noop')), // Workaround for https://github.com/andris9/encoding/issues/16
 			new DefinePlugin({
