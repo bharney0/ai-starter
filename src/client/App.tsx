@@ -43,6 +43,9 @@ const AsyncHomeLayout = lazy(
 const AsyncEditProfile = lazy(
 	() => import(/* webpackChunkName: "EditProfile" */ './components/Profile/EditProfile')
 );
+const AsyncUserChatMessage = lazy(
+	() => import(/* webpackChunkName: "Chat" */ './pages/chat/Chat')
+);
 const AsyncProfile = lazy(
 	() => import(/* webpackChunkName: "Profile" */ './components/Profile/Profile')
 );
@@ -298,6 +301,43 @@ export const App = (props: AppProps) => {
 										/>
 										<AsyncHomeLayout {...rest} {...props}>
 											<AsyncEditProfile {...(props as any)} />
+										</AsyncHomeLayout>
+										<Footer />
+									</NavContext.Provider>
+								</RequireAuthentication>
+							</React.Fragment>
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/chat"
+					element={
+						<Suspense fallback={<Loading />}>
+							<React.Fragment>
+								<RequireAuthentication
+									alertActions={alertActions}
+									sessionActions={sessionActions}
+									accountActions={accountActions}
+									{...session}
+									{...rest}
+								>
+									<NavContext.Provider
+										value={{
+											on: state.on,
+											toggle: toggle,
+											onUpdate: onUpdate,
+											handleOverlayToggle: handleOverlayToggle
+										}}
+									>
+										<NavMenu
+											accountActions={accountActions}
+											alertActions={alertActions}
+											sessionActions={sessionActions}
+											{...session}
+											{...(props as any)}
+										/>
+										<AsyncHomeLayout {...rest} {...props}>
+											<AsyncUserChatMessage {...(props as any)} />
 										</AsyncHomeLayout>
 										<Footer />
 									</NavContext.Provider>

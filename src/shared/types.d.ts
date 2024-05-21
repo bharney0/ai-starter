@@ -4,6 +4,9 @@ declare module '*.jpg';
 declare module '*.png';
 declare module '*.gif';
 declare module '*.svg';
+// declaration.d.ts
+declare module '*.scss';
+declare module '*.css';
 
 /** Indicates we are in a server (node) environment. Injected via webpack's DefinePlugin. */
 declare const __SERVER__: boolean;
